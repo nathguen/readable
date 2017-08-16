@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.footer, .dashboard {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.toolbar-sort-buttons > * {
+  min-width: 38px !important;
+}
+
+.toolbar-sort-buttons .toolbar-button {
+  margin-left: 4px !important;
+}
+
+.toolbar-separator {
+  margin: 0 15px !important;
+}
+
+.readable-toolbar {
+  padding-right: 90px !important;
+  position: relative;
+}

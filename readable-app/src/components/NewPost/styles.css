@@ -1,0 +1,18 @@
+.new-post-category-name {
+  font-weight: lighter;
+  opacity: .4;
+  margin-left: 10px;
+}
+
+.category-new-post {
+  margin: 5px;
+  padding: 10px 15px;
+}
+
+.category-new-post-container {
+  margin-top: -5px;
+  margin-bottom: -5px;
+  padding: 5px 0;
+  background: #f1fdff;
+  /* background: linear-gradient(#0a8a9a, white); */
+}

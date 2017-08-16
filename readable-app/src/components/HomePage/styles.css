@@ -1,0 +1,7 @@
+.dashboard-toolbar .toolbar-button {
+  background: white !important;
+}
+
+.dashboard-toolbar .toolbar-button:hover {
+  color: rgb(0, 188, 212) !important;
+}
