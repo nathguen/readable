@@ -59,7 +59,7 @@ export default function reducer(state = {}, action) {
         [action.postId]: {
           ...state[action.postId],
           __comments: action.comments.reduce((obj, comment) => {
-            obj[comment.id] = comment
+            obj[comment.id] = comment.id
             return obj
           }, {}),
           __comments_status: `found ${action.comments.length} comments`
@@ -119,7 +119,7 @@ export default function reducer(state = {}, action) {
           __create_comment_status: 'submitted',
           __comments: {
             ...state[action.comment.parentId].__comments,
-            [action.comment.id]: action.comment
+            [action.comment.id]: action.comment.id
           }
         }
       }

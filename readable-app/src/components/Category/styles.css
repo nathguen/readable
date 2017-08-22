@@ -2,15 +2,6 @@
     margin-bottom: 15px;
 } 
 
-/* .category-title {
-    background: rgb(40, 134, 146);
-    color: white !important;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 15px;
-} */
-
 .list-item-post {
     text-align: left;
 }
@@ -18,16 +9,6 @@
 .empty-post {
     opacity: .4;
 }
-
-/* button.category-title-link {
-    background: #3dabb9 !important; 
-    color: white !important;
-    font-size: 17px !important;
-}
-
-button.category-title-link:hover {
-    background: #51c9d8 !important;
-} */
 
 .post-view-comments {
     display: block;

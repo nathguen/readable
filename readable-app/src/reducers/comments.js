@@ -36,6 +36,24 @@ export default function reducer(state = {}, action) {
         }
       }
 
+    case actions.UP_VOTE_COMMENT:
+      return {
+        ...state,
+        [action.commentId]: {
+          ...state[action.commentId],
+          voteScore: state[action.commentId].voteScore + 1
+        }
+      }
+
+    case actions.DOWN_VOTE_COMMENT:
+      return {
+        ...state,
+        [action.commentId]: {
+          ...state[action.commentId],
+          voteScore: state[action.commentId].voteScore - 1
+        }
+      }
+
     default:
       return state
   }

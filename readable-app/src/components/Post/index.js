@@ -13,6 +13,7 @@ import {
   Paper,
   TextField
 } from 'material-ui'
+import Moment from 'react-moment'
 import MdThumbUp from 'react-icons/lib/md/thumb-up'
 import MdThumbDown from 'react-icons/lib/md/thumb-down'
 import Comment from '../Comment'
@@ -41,17 +42,18 @@ class Post extends Component {
       upVotePost,
       downVotePost,
       post,
-      toggleComments
+      toggleComments,
+      comments
      } = this.props
-    let comments = []
+    let postComments = []
     let visible = false
     let commentStatus = null
 
     if (post.__comments) {
       // retrieve comments for post
-      comments = Object.keys(post.__comments).length
+      postComments = Object.keys(post.__comments).length
         ? Object.keys(post.__comments).reduce((arr, key) => {
-          arr.push(post.__comments[key])
+          arr.push(comments[key])
           return arr
         }, [])
         : []
@@ -71,8 +73,13 @@ class Post extends Component {
           : 'category-post'}>
         <Card initiallyExpanded={true}>
           <CardHeader
-            title={<strong>{post.title}</strong>}
-            subtitle={`by ${post.author}`}
+            title={
+              <div className="post-title">
+                <span className="post-author">{post.author}</span>
+                <strong className="post-title-message">{post.title}</strong>
+              </div>
+            }
+            subtitle={<Moment fromNow>{post.timestamp}</Moment>}
             actAsExpander={true}
             showExpandableButton={true}
           />
@@ -82,14 +89,14 @@ class Post extends Component {
               <RaisedButton onClick={() => this.initiateComment(post.id)}>
                 Reply
               </RaisedButton>
-              {(comments.length > 0) && (
+              {(postComments.length > 0) && (
                 <span
                   onClick={() => toggleComments(post.id)}
                   className="post-comments-count">
-                    { visible
+                  {visible
                     ? 'hide '
                     : 'show '}
-                    {comments.length} comments
+                  {postComments.length} comments
                   </span>
               )}
             </div>
@@ -100,7 +107,7 @@ class Post extends Component {
               <FlatButton className="vote-button" onClick={() => downVotePost(post)}>
                 <MdThumbDown />
               </FlatButton>
-              <span className="category-post-vote-score">
+              <span className="vote-score">
                 {(post.voteScore > 0) && (
                   <span>+</span>
                 )}
@@ -111,7 +118,7 @@ class Post extends Component {
         </Card>
         {(visible) && (
           <CommentsContainer
-            comments={comments}
+            comments={postComments}
             post={post}
             commentStatus={commentStatus} />
         )}

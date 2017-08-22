@@ -59,3 +59,8 @@ export function submitComment(comment) {
       return promise
     })
 }
+
+export function updateComment(comment) {
+  return axios.put(`/comments/${comment.id}`, comment)
+    .then(resp => resp.data)
+}

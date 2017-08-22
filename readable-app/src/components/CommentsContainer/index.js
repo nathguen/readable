@@ -20,7 +20,7 @@ class CommentsContainer extends Component {
       const comment = {
         id: guid.raw(),
         body,
-        author: "Nathan Guenther",
+        author: this.props.userName,
         parentId: this.props.post.id,
         timestamp: Date.now()
       }
@@ -108,4 +108,10 @@ class CommentsContainer extends Component {
   }
 }
 
-export default connect()(CommentsContainer)
+function mapPropsToState({profile}) {
+  return {
+    userName: profile.userName
+  }
+}
+
+export default connect(mapPropsToState)(CommentsContainer)

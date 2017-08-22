@@ -2,3 +2,30 @@
   display: flex;
   align-items: center;
 }
+
+.new-comment {
+  background: white;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+  align-items: center;
+  border-left: 2px solid transparent;
+}
+
+.new-comment.initiated {
+  border-left-color: orange;
+}
+
+.new-comment.valid {
+  border-left-color: #19e019;
+}
+
+.new-comment.invalid {
+  border-left-color: #b51818;
+}
+
+.comments-container {
+  background: rgb(230,230,230);
+  padding: 5px;
+}

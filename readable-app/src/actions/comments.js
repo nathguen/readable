@@ -10,6 +10,8 @@ export const RECEIVE_POST_COMMENTS = "RECEIVE_POST_COMMENTS"
 export const NO_COMMENTS_FOUND = "NO_COMMENTS_FOUND"
 export const COMMENT_SUBMITTED = "COMMENT_SUBMITTED"
 export const SENDING_COMMENT = "SENDING_COMMENT"
+export const UP_VOTE_COMMENT = "UP_VOTE_COMMENT"
+export const DOWN_VOTE_COMMENT = "DOWN_VOTE_COMMENT"
 
 
 
@@ -80,4 +82,34 @@ export const submitComment = (comment) => (dispatch) => {
   dispatch(sendingComment(comment))
   api.submitComment(comment)
     .then(comment => dispatch(commentSubmitted(comment)))
+}
+
+export const upVoteCommentAction = (commentId) => {
+  return {
+    type: UP_VOTE_COMMENT,
+    commentId
+  }
+}
+
+export const upVoteComment = (comment) => (dispatch) => {
+  const proposedComment = Object.assign({}, comment, {
+    voteScore: comment.voteScore + 1
+  })
+  api.updateComment(proposedComment)
+    .then(() => dispatch(upVoteCommentAction(comment.id)))
+}
+
+export const downVoteCommentAction = (commentId) => {
+  return {
+    type: DOWN_VOTE_COMMENT,
+    commentId
+  }
+}
+
+export const downVoteComment = (comment) => (dispatch) => {
+  const proposedComment = Object.assign({}, comment, {
+    voteScore: comment.voteScore - 1
+  })
+  api.updateComment(proposedComment)
+    .then(() => dispatch(downVoteCommentAction(comment.id)))
 }
