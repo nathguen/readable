@@ -43,18 +43,12 @@ export function createPost(post) {
     .then(resp => resp.data)
 }
 
-export function createComment({ comment, postId }) {
-  const data = Object.assign({}, comment, {
-    id: guid.raw(),
-    timestamp: Date.now(),
-    parentId: postId
-  })
-
-  return axios.post(`/posts/${postId}/comments`, data)
+export function fetchPostComments(postId) {
+  return axios.get(`/posts/${postId}/comments`)
     .then(resp => resp.data)
 }
 
-export function fetchPostComments(postId) {
-  return axios.get(`/posts/${postId}/comments`)
+export function submitComment(comment) {
+  return axios.post(`/comments`, comment)
     .then(resp => resp.data)
 }

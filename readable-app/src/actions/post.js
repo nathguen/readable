@@ -1,5 +1,6 @@
 import * as api from '../utils/api'
 import guid from 'guid'
+import * as commentsActions from './comments'
 
 export const GET_ALL_POSTS = "GET_ALL_POSTS"
 export const RECEIVE_POSTS = "RECEIVE_POSTS"
@@ -12,6 +13,16 @@ export const RECEIVE_CREATED_POST = "RECEIVE_CREATED_POST"
 export const TRY_CREATE_POST = "TRY_CREATE_POST"
 export const SETUP_NEW_POST = "SETUP_NEW_POST"
 export const CANCEL_NEW_POST = "CANCEL_NEW_POST"
+export const SELECT_POST = "SELECT_POST"
+export const DESELECT_POST = "DESELECT_POST"
+export const DESELECT_POSTS = "DESELECT_POSTS"
+export const INITIATE_COMMENT = "INITIATE_COMMENT"
+export const VALID_COMMENT = "VALID_COMMENT"
+export const INVALID_COMMENT = "INVALID_COMMENT"
+export const CANCEL_COMMENT = "CANCEL_COMMENT"
+export const TOGGLE_COMMENTS_VISIBILITY = "TOGGLE_COMMENTS_VISIBILITY"
+
+
 
 export const receivePosts = posts => ({
   type: RECEIVE_POSTS,
@@ -100,5 +111,60 @@ export const cancelCreatePost = (category) => {
   return {
     type: CANCEL_NEW_POST,
     category
+  }
+}
+
+export const selectPost = (postId) => {
+  return {
+    type: SELECT_POST,
+    postId
+  }
+}
+
+export const deselectPost = (postId) => {
+  return {
+    type: DESELECT_POST,
+    postId
+  }
+}
+
+export const deselectPosts = () => {
+  return {
+    type: DESELECT_POSTS
+  }
+}
+
+export const initiateComment = (postId) => {
+  return {
+    type: INITIATE_COMMENT,
+    postId
+  }
+}
+
+export const validComment = (postId) => {
+  return {
+    type: VALID_COMMENT,
+    postId
+  }
+}
+
+export const invalidComment = (postId) => {
+  return {
+    type: INVALID_COMMENT,
+    postId
+  }
+}
+
+export const cancelComment = (postId) => {
+  return {
+    type: CANCEL_COMMENT,
+    postId
+  }
+}
+
+export const toggleCommentsVisibility = (postId) => {
+  return {
+    type: TOGGLE_COMMENTS_VISIBILITY,
+    postId
   }
 }

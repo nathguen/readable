@@ -1,3 +1,4 @@
+import guid from 'guid'
 import * as api from '../utils/api'
 
 export const CREATE_COMMENT = "CREATE_COMMENT"
@@ -6,18 +7,11 @@ export const SAVE_COMMENT = "SAVE_COMMENT"
 export const DELETE_COMMENT = "DELETE_COMMENT"
 export const GET_POST_COMMENTS = "GET_POST_COMMENTS"
 export const RECEIVE_POST_COMMENTS = "RECEIVE_POST_COMMENTS"
+export const NO_COMMENTS_FOUND = "NO_COMMENTS_FOUND"
+export const COMMENT_SUBMITTED = "COMMENT_SUBMITTED"
+export const SUBMITTING_COMMENT = "SUBMITTING_COMMENT"
 
-export const createCommentAction = ({comment, postId}) => {
-  return {
-    type: CREATE_COMMENT,
-    comment,
-    postId
-  }
-}
 
-export const createComment = ({comment, postId}) => (dispatch) => {
-  api.createComment()
-}
 
 export const getPostCommentsAction = (postId) => {
   return {
@@ -26,13 +20,26 @@ export const getPostCommentsAction = (postId) => {
   }
 }
 
+export const noCommentsFound = (postId) => {
+  return {
+    type: NO_COMMENTS_FOUND,
+    postId
+  }
+}
+
 export const getPostComments = (postId) => (dispatch) => {
   dispatch(getPostCommentsAction(postId))
   api.fetchPostComments(postId)
-    .then((resp) => dispatch(receivePostComments({
-      comments: resp,
-      postId
-    })))
+    .then((data) => {
+      if(data.length) {
+        dispatch(receivePostComments({
+          comments: data,
+          postId
+        }))
+      } else {
+        dispatch(noCommentsFound(postId))
+      }
+    })
 }
 
 export const receivePostComments = ({comments, postId}) => {
@@ -41,4 +48,36 @@ export const receivePostComments = ({comments, postId}) => {
     comments,
     postId
   }
+}
+
+export const createCommentAction = (comment) => {
+  return {
+    type: CREATE_COMMENT,
+    comment
+  }
+}
+
+export const createComment = (comment) => (dispatch) => {
+  dispatch(createCommentAction(comment))
+  dispatch(submitComment(comment))
+}
+
+export const submittingComment = (comment) => {
+  return {
+    type: SUBMITTING_COMMENT,
+    comment
+  }
+}
+
+export const commentSubmitted = (comment) => {
+  return {
+    type: COMMENT_SUBMITTED,
+    comment
+  }
+}
+
+export const submitComment = (comment) => (dispatch) => {
+  dispatch(submittingComment(comment))
+  api.submitComment(comment)
+    .then(comment => dispatch(commentSubmitted(comment)))
 }

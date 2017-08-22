@@ -6,7 +6,7 @@ export const sortArray = (arr, filter, direction) => {
       case 'string':
         return sortByString(arr, filter, direction)
       default:
-        console.error(`Couldn't find proper type for sort: ${typeof arr[0][filter]}`)
+        console.warn(`Couldn't find proper type for sort: ${typeof arr[0][filter]}`)
         return []
     }
   }
