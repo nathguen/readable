@@ -114,11 +114,16 @@ export const cancelCreatePost = (category) => {
   }
 }
 
-export const selectPost = (postId) => {
+export const selectPostAction = (postId) => {
   return {
     type: SELECT_POST,
     postId
   }
+}
+
+export const selectPost = (postId) => (dispatch) => {
+  dispatch(deselectPosts())
+  dispatch(selectPostAction(postId))
 }
 
 export const deselectPost = (postId) => {

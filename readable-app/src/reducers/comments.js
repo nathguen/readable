@@ -18,7 +18,7 @@ export default function reducer(state = {}, action) {
         }
       }
 
-    case actions.SUBMITTING_COMMENT:
+    case actions.SENDING_COMMENT:
       return {
         ...state,
         [action.comment.id]: {

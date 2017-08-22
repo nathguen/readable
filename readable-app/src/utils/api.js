@@ -50,5 +50,12 @@ export function fetchPostComments(postId) {
 
 export function submitComment(comment) {
   return axios.post(`/comments`, comment)
-    .then(resp => resp.data)
+    .then(resp => {
+      const promise = new Promise((resolve, reject) => {
+        window.setTimeout(() => {
+          resolve(resp.data)
+        }, 1000, resp)
+      })
+      return promise
+    })
 }

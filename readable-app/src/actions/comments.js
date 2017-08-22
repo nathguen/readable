@@ -9,7 +9,7 @@ export const GET_POST_COMMENTS = "GET_POST_COMMENTS"
 export const RECEIVE_POST_COMMENTS = "RECEIVE_POST_COMMENTS"
 export const NO_COMMENTS_FOUND = "NO_COMMENTS_FOUND"
 export const COMMENT_SUBMITTED = "COMMENT_SUBMITTED"
-export const SUBMITTING_COMMENT = "SUBMITTING_COMMENT"
+export const SENDING_COMMENT = "SENDING_COMMENT"
 
 
 
@@ -62,9 +62,9 @@ export const createComment = (comment) => (dispatch) => {
   dispatch(submitComment(comment))
 }
 
-export const submittingComment = (comment) => {
+export const sendingComment = (comment) => {
   return {
-    type: SUBMITTING_COMMENT,
+    type: SENDING_COMMENT,
     comment
   }
 }
@@ -77,7 +77,7 @@ export const commentSubmitted = (comment) => {
 }
 
 export const submitComment = (comment) => (dispatch) => {
-  dispatch(submittingComment(comment))
+  dispatch(sendingComment(comment))
   api.submitComment(comment)
     .then(comment => dispatch(commentSubmitted(comment)))
 }

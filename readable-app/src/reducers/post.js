@@ -102,11 +102,21 @@ export default function reducer(state = {}, action) {
         return obj
       }, state))
 
+    case actions.SENDING_COMMENT:
+      return {
+        ...state,
+        [action.comment.parentId]: {
+          ...state[action.comment.parentId],
+          __create_comment_status: 'sending'
+        }
+      }
+
     case actions.COMMENT_SUBMITTED:
       return {
         ...state,
         [action.comment.parentId]: {
           ...state[action.comment.parentId],
+          __create_comment_status: 'submitted',
           __comments: {
             ...state[action.comment.parentId].__comments,
             [action.comment.id]: action.comment

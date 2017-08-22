@@ -18,6 +18,9 @@ import MdThumbDown from 'react-icons/lib/md/thumb-down'
 import Comment from '../Comment'
 import guid from 'guid'
 import './styles.css'
+import CommentsContainer from '../CommentsContainer'
+
+
 
 class Post extends Component {
   componentDidMount() {
@@ -27,47 +30,9 @@ class Post extends Component {
     }
   }
 
-  submitComment = (e) => {
-    e.preventDefault()
-    const body = this.newCommentTextInput.input.getInputNode().value
-    if (body.length) {
-      const comment = {
-        id: guid.raw(),
-        body,
-        author: "Nathan Guenther",
-        parentId: this.props.post.id,
-        timestamp: Date.now()
-      }
-      this.props.createComment(comment)
-      this.newCommentTextInput.input.getInputNode().value = ''
-    }
-
-  }
-
   initiateComment = (postId) => {
     this.props.initiateComment(postId)
     this.props.selectPost(postId)
-  }
-
-  setNewCommentClass = (status) => {
-    if (status) {
-      return `${status} new-comment`
-    }
-    return "new-comment"
-  }
-
-  validateTextInput = ({ value, postId }) => {
-    // @TODO add better validation
-    if (value.length) {
-      this.props.validComment(postId)
-    } else {
-      this.props.invalidComment(postId)
-    }
-  }
-
-  cancelComment = (postId) => {
-    this.newCommentTextInput.input.getInputNode().value = ''
-    this.props.cancelComment(postId)
   }
 
 
@@ -76,8 +41,6 @@ class Post extends Component {
       upVotePost,
       downVotePost,
       post,
-      showComments,
-      deselectPost,
       toggleComments
      } = this.props
     let comments = []
@@ -147,39 +110,10 @@ class Post extends Component {
           </CardActions>
         </Card>
         {(visible) && (
-          <div className="comments-container">
-            {(commentStatus && commentStatus !== 'cancelled') && (
-              <form
-                className={this.setNewCommentClass(commentStatus)}
-                onSubmit={(e) => this.submitComment(e)}>
-                <TextField
-                  autoFocus
-                  className="new-comment-input"
-                  floatingLabelText="Comment"
-                  multiLine={true}
-                  ref={(input) => this.newCommentTextInput = input}
-                  onChange={() => this.validateTextInput({
-                    value: this.newCommentTextInput.input.getInputNode().value,
-                    postId: post.id
-                  })}
-                  id={`${post.id}-new-comment-text`} />
-                <div className="new-comment-buttons-container">
-                  <RaisedButton
-                    label="Submit"
-                    type="submit" />
-                  <FlatButton
-                    label="Cancel"
-                    onClick={() => this.cancelComment(post.id)} />
-                </div>
-              </form>
-            )}
-            {comments.map((comment, index) => (
-              <Comment
-                key={comment.id}
-                comment={comment}
-                lastComment={(index === comments.length - 1)} />
-            ))}
-          </div>
+          <CommentsContainer
+            comments={comments}
+            post={post}
+            commentStatus={commentStatus} />
         )}
       </div>
     )
@@ -202,14 +136,8 @@ function mapPropsToDispatch(dispatch) {
     upVotePost: (data) => dispatch(actions.upVotePost(data)),
     downVotePost: (data) => dispatch(actions.downVotePost(data)),
     fetchComments: (postId) => dispatch(actions.getPostComments(postId)),
-    showComments: (postId) => dispatch(actions.selectPost(postId)),
-    createComment: (comment) => dispatch(actions.createComment(comment)),
     initiateComment: (postId) => dispatch(actions.initiateComment(postId)),
     selectPost: (postId) => dispatch(actions.selectPost(postId)),
-    validComment: (postId) => dispatch(actions.validComment(postId)),
-    invalidComment: (postId) => dispatch(actions.invalidComment(postId)),
-    deselectPost: (postId) => dispatch(actions.deselectPost(postId)),
-    cancelComment: (postId) => dispatch(actions.cancelComment(postId)),
     toggleComments: (postId) => dispatch(actions.toggleCommentsVisibility(postId))
   }
 }
